@@ -33,7 +33,7 @@ class RSA(object):
             g, y, x = self.egcd(b % a, a)
             return (g, x-(b//a)*y, y)
 	
-	#computes modular inverse assuming p is prime
+    #computes modular inverse assuming p is prime
     def modinv(self, a, p):
         g, x, y = self.egcd(a%p, p)
         return x % p

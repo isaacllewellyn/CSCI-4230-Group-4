@@ -6,6 +6,7 @@ import rsa as rsa
 import blumblumshub as bbs
 import ECC as ecc
 import diffiehell as dfh
+import hmac
 
 def getNonce(length):
     return ''.join([str(random.randint(0, 9)) for i in range(length)])
@@ -42,6 +43,6 @@ def encrypt(enc_type, message, key):
         message = ecc.encrypt(message, key)
     elif enc_type == 1:
         message = dfh.encrypt(message, key)
-    return message, 1
+    return message + hmac(key, message), 1
 def decrypt(type, message, key):
     return message
