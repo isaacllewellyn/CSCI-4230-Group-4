@@ -136,12 +136,12 @@ ecc.decrypt(res[0], res[1])
 #authentication using ECC, run as many times until results in non-inf point
 ecc2 = ECC()
 ecc2.init(3, 2, 17)
+#use the same base point
 x1 = ecc.authinit(ecc.keypoint)
 print x1
 x2 = ecc2.authinit(ecc.keypoint)
 print x2
-print ecc.x
-print ecc2.x
+#exchange x2 and x1
 print ecc.authconfirm(x2)
 print ecc2.authconfirm(x1)
 
