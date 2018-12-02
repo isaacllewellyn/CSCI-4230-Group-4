@@ -1,6 +1,5 @@
 #HMAC implementation
 from __future__ import print_function
-from itertools import cycle, izip
 import sha_1
 import io
 import struct
@@ -42,14 +41,11 @@ def hmac(key, m):
 
 
 	preIn = i_key_pad + m
-	print(preIn)
 	inner = sha_1.sha1(preIn)
-	print(inner)
 	preOut = o_key_pad + inner
 	outer = sha_1.sha1(preOut)
 
 	return outer
-
 
 
 def main():
