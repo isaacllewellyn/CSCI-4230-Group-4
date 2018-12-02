@@ -1,6 +1,6 @@
 #https://pymotw.com/3/socket/tcp.html
 #socket_echo_server.py
-import socket
+import socket, message
 import sys
 
 # Create a TCP/IP socket
@@ -16,6 +16,7 @@ sock.listen(1)
 
 
 def authenticate(data):
+    key = '696969'
     if(data[:3] == 'ECC'):
         print("Attempting ECC authentication")
     if(data[:3] == 'DFH'):
@@ -24,7 +25,9 @@ def authenticate(data):
         print("Attempting SimpleSimpleDes authentication")
     if(data[:3] == 'BBS'):
         print("Attempting BlumBlumblumBlumBlumShubbibiSubbi authentication")
+    return key
 
+Client_Key = ''
 while True:
     # Wait for a connection
     print('Waiting for a connection')
@@ -40,9 +43,11 @@ while True:
             if data:
                 if(connected == 0):
                     print('User authentication stage')
-                    user = authenticate(data)
+                    Client_Key = authenticate(data)
                 else:
                     print('User Transmission stage')
+                    data = message.decrypt(data, Client_Key)
+
 
                 connection.sendall(data)
             else:
