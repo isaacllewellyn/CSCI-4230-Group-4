@@ -45,7 +45,7 @@ def encrypt(enc_type, message, key):
         message = rsa.encrypt(message, key)
     return message, 1
 def decrypt(def_type, message, key):
-     if dec_type == 0:
+    if dec_type == 0:
         message = ecc.decrypt(message, key)
     elif dec_type == 1:
         message = dfh.decrypt(message, key)
