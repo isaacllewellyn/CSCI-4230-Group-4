@@ -26,13 +26,13 @@ def authenticate(data):
         print("Attempting DiffeHell authentication")
         key = message.authenticate(1)
         type = 1
-    if(data[:3] == 'SDS'):
-        print("Attempting SimpleSimpleDes authentication")
-        key = message.authenticate(2)
-        type = 2
-    if(data[:3] == 'BBS'):
-        print("Attempting BlumBlumblumBlumBlumShubbibiSubbi authentication")
-        key = message.authenticate(3)
+    # if(data[:3] == 'SDS'):
+    #     print("Attempting SimpleSimpleDes authentication")
+    #     key = message.authenticate(2)
+    #     type = 2
+    # if(data[:3] == 'BBS'):
+    #     print("Attempting BlumBlumblumBlumBlumShubbibiSubbi authentication")
+    #     key = message.authenticate(3)
         type = 3
     if (data[:3] == 'RSA'):
         print("Attempting RenssslearSavyAdcryption authentication")

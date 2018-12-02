@@ -9,10 +9,20 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_address = ('localhost', 11000)
 print('connecting to {} port {}'.format(*server_address))
 sock.connect(server_address)
-
+print('Welcome to Group 4 Secure Socket Client!')
+type = input('Input your authentication method:\n 1:'
+             ' ECC\n2: DFH\n3: RSA\n enter the number of your choice: ')
+message = ''
+authenticated = 0
+if(type == 1):
+    message = b'ECC'
+elif type == 2:
+    message = b'DFH'
+elif type == 3:
+    message = b'RSA'
 try:
     # Send data
-    message = b'EEC It will be sent to the server.'
+    message = message + b': and this will be sent to the server.'
     print('sending {!r}'.format(message))
     sock.sendall(message)
     # Look for the response
@@ -24,6 +34,9 @@ try:
         amount_received += len(data)
         print('received {!r}'.format(data))
 
+    while authenticated == 1:
+        input("SHELL: ")
+        
 finally:
     print('closing socket')
     sock.close()
