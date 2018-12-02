@@ -33,18 +33,18 @@ def authenticate(enc_type):
         key = dfh.authenticate()
     return key, 1
 def encrypt(enc_type, message, key):
-    if dec_type == 0:
+    if enc_type == 0:
         message = ecc.encrypt(message, key)
-    elif dec_type == 1:
-        message = dfh.encrypt(message, key)
-    elif dec_type == 2:
+    elif enc_type == 1:
+        enc_type = dfh.encrypt(message, key)
+    elif enc_type == 2:
         message = des.encrypt(message, key)
-    elif dec_type == 3:
+    elif enc_type == 3:
         message = bbs.encrypt(message, key)
-    elif dec_type == 4:
+    elif enc_type == 4:
         message = rsa.encrypt(message, key)
     return message, 1
-def decrypt(def_type, message, key):
+def decrypt(dec_type, message, key):
     if dec_type == 0:
         message = ecc.decrypt(message, key)
     elif dec_type == 1:
