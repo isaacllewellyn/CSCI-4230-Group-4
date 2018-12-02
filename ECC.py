@@ -14,7 +14,7 @@ class ECC(object):
 		
 		
 		
-		print "computing a list of points"
+		print ("computing a list of points")
 		self.points = np.zeros((0, 2))
 		
 		#obtain a list of points
@@ -27,19 +27,19 @@ class ECC(object):
 				if pow(j, 2, p) == x:
 					self.points = np.append(self.points, [[i, j]], axis=0)
 		
-		print self.points
-		print self.points.shape
-		print "randomly picking a key point"
+		print (self.points)
+		print (self.points.shape)
+		print ("randomly picking a key point")
 		self.keypoint = self.points[random.randint(0, self.points.shape[0]-1)]
-		print self.keypoint
+		print( self.keypoint)
 		
-		print "secret int:"
+		print ("secret int:")
 		self.secretint = random.randint(2, p)
-		print self.secretint
+		print (self.secretint)
 		
-		print "product:"
+		print ("product:")
 		self.bpoint = self.multoverec(self.keypoint, self.secretint)
-		print self.bpoint
+		print (self.bpoint)
 		
 		#bpoint = keypoint*secretint
 		#public: keypoint, curve formula, bpoint
@@ -97,18 +97,18 @@ class ECC(object):
 	
 	def encrypt(self, x, keypoint, bpoint):
 		#alice's encryption
-		print "msg:"
+		print ("msg:")
 		msg = self.points[x]
-		print msg
+		print (msg)
 
-		print "ciphertext:"
+		print ("ciphertext:")
 		#computes y1 = k*keypoint, y2 = x+k*bpoint
 		rand = random.randint(2, self.p)
 		y1 = self.multoverec(keypoint, rand)
 		y2 = self.multoverec(bpoint, rand)
 		y2 = self.addoverec(y2, msg)
-		print y1
-		print y2
+		print (y1)
+		print (y2)
 		return (y1, y2)
 	
 	def decrypt(self, y1, y2):
@@ -117,8 +117,8 @@ class ECC(object):
 		if (np.array_equal(y1, self.inf) == False):
 			y1 = np.array([y1[0], (-y1[1])%self.p])
 		y1 = self.addoverec(y2, y1)
-		print "reconstructed plaintext:"
-		print y1
+		print ("reconstructed plaintext:")
+		print (y1)
 
 ecc = ECC()
 ecc.init(3, 2, 17)
