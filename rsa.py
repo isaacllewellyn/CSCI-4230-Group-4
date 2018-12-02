@@ -1,19 +1,24 @@
 import sys
 import numpy as np
-import math
 import random
 random.seed()
+
+def gcd(a, b):
+	if b == 0:
+			return a
+	else:
+		return gcd(b, a%b)
 
 class RSA(object):
     def __init__(self, p, q):
         self.p = p
         self.q = q
         self.n = p*q
-        self.lam = ((p-1)*(q-1))//math.gcd(p-1, q-1)
+        self.lam = ((p-1)*(q-1))//gcd(p-1, q-1)
 
         # find exponent coprime with lam
         self.e = random.randint(2, self.lam-1)
-        while math.gcd(self.e, self.lam) != 1:
+        while gcd(self.e, self.lam) != 1:
             self.e = random.randint(2, self.lam-1)
 
         self.d = self.modinv(self.e, self.lam)
