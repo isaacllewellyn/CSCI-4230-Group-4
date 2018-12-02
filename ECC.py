@@ -6,9 +6,6 @@ random.seed()
 
 class ECC(object):
 	def init(self, a, b, p):
-		p = 17
-		a = 3
-		b = 2
 		#WE DEFINE THE INFINITE POINT AS (-1, -1)
 		self.inf = np.array([-1, -1])
 		self.a = a
