@@ -122,10 +122,10 @@ class ECC(object):
 	
 	def authinit(self, g):
 		self.x = random.randint(2, self.points.shape[0]-1)
-		return ecc.multoverec(g, self.x)
+		return self.multoverec(g, self.x)
 
 	def authconfirm(self, g1):
-		return ecc.multoverec(g1, self.x)
+		return self.multoverec(g1, self.x)
 
 def test():
 	ecc = ECC(3, 2, 17)
