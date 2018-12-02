@@ -31,6 +31,7 @@ class Hasha1(object):
 			self._h = process_chunk(chunk, *self._h)
 			self._message_byte_length += 64
 			chunk = arg[:64]
+			arg = arg[64:]
 
 		self._unprocessed = chunk
 		return self
@@ -105,7 +106,6 @@ def process_chunk(chunk, h0, h1, h2, h3, h4):
 	h2 = (h2 + c) & 0xffffffff
 	h3 = (h3 + d) & 0xffffffff
 	h4 = (h4 + e) & 0xffffffff
-
 	return h0, h1, h2, h3, h4
 
 

@@ -5,7 +5,7 @@ import random
 random.seed()
 
 class ECC(object):
-	def init(self, a, b, p):
+	def __init__(self, a, b, p):
 		#WE DEFINE THE INFINITE POINT AS (-1, -1)
 		self.inf = np.array([-1, -1])
 		self.a = a
@@ -127,21 +127,19 @@ class ECC(object):
 	def authconfirm(self, g1):
 		return ecc.multoverec(g1, self.x)
 
-ecc = ECC()
-ecc.init(3, 2, 17)
+ecc = ECC(3, 2, 17)
 x = random.randint(0, ecc.points.shape[0]-1)
 res = ecc.encrypt(x, ecc.keypoint, ecc.bpoint)
 ecc.decrypt(res[0], res[1])
 
 #authentication using ECC, run as many times until results in non-inf point
-ecc2 = ECC()
-ecc2.init(3, 2, 17)
+ecc2 = ECC(3, 2, 17)
+#use the same base point
 x1 = ecc.authinit(ecc.keypoint)
 print x1
 x2 = ecc2.authinit(ecc.keypoint)
 print x2
-print ecc.x
-print ecc2.x
+#exchange x2 and x1
 print ecc.authconfirm(x2)
 print ecc2.authconfirm(x1)
 
