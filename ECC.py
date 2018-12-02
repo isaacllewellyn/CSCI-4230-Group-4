@@ -119,10 +119,30 @@ class ECC(object):
 		y1 = self.addoverec(y2, y1)
 		print ("reconstructed plaintext:")
 		print (y1)
+	
+	def authinit(self, g):
+		self.x = random.randint(2, self.points.shape[0]-1)
+		return ecc.multoverec(g, self.x)
+
+	def authconfirm(self, g1):
+		return ecc.multoverec(g1, self.x)
 
 ecc = ECC()
 ecc.init(3, 2, 17)
 x = random.randint(0, ecc.points.shape[0]-1)
 res = ecc.encrypt(x, ecc.keypoint, ecc.bpoint)
 ecc.decrypt(res[0], res[1])
+
+#authentication using ECC, run as many times until results in non-inf point
+ecc2 = ECC()
+ecc2.init(3, 2, 17)
+x1 = ecc.authinit(ecc.keypoint)
+print x1
+x2 = ecc2.authinit(ecc.keypoint)
+print x2
+print ecc.x
+print ecc2.x
+print ecc.authconfirm(x2)
+print ecc2.authconfirm(x1)
+
 
