@@ -9,3 +9,7 @@ def generate_timestamp():
     return str(int(time.time()))
 def getBuffer():
     return generate_timestamp() + getNonce(8)
+def encrypt(message, key):
+    return 1
+def decrypt(message, key):
+    return 1
