@@ -19,12 +19,17 @@ def authenticate(data):
     key = '696969'
     if(data[:3] == 'ECC'):
         print("Attempting ECC authentication")
+        key = message.authenticate(0)
     if(data[:3] == 'DFH'):
         print("Attempting DiffeHell authentication")
+        key = message.authenticate(1)
     if(data[:3] == 'SDS'):
         print("Attempting SimpleSimpleDes authentication")
+        key = message.authenticate(2)
     if(data[:3] == 'BBS'):
         print("Attempting BlumBlumblumBlumBlumShubbibiSubbi authentication")
+        key = message.authenticate(3)
+
     return key
 
 Client_Key = ''
