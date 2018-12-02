@@ -43,6 +43,6 @@ def encrypt(enc_type, message, key):
         message = ecc.encrypt(message, key)
     elif enc_type == 1:
         message = dfh.encrypt(message, key)
-    return message + hmac(key, message), 1
+    return message + hmac.hmac(key, message), 1
 def decrypt(type, message, key):
     return message

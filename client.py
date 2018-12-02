@@ -11,12 +11,10 @@ print('connecting to {} port {}'.format(*server_address))
 sock.connect(server_address)
 
 try:
-
     # Send data
-    message = b'This is the message.  It will be repeated.'
+    message = b'EEC It will be sent to the server.'
     print('sending {!r}'.format(message))
     sock.sendall(message)
-
     # Look for the response
     amount_received = 0
     amount_expected = len(message)
