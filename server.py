@@ -1,13 +1,13 @@
 #https://pymotw.com/3/socket/tcp.html
 #socket_echo_server.py
-import socket, message
+import socket, message, subprocess
 import sys
 
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Bind the socket to the port
-server_address = ('localhost', 10000)
+server_address = ('localhost', 11000)
 print('Starting up the most secure server on {} port {}'.format(*server_address))
 sock.bind(server_address)
 
@@ -44,10 +44,16 @@ while True:
                 if(connected == 0):
                     print('User authentication stage')
                     Client_Key = authenticate(data)
+                    data = b'You are connected! Congratulations, enjoy your shell.'
+                    connected = 1
                 else:
                     print('User Transmission stage')
                     data = message.decrypt(data, Client_Key)
-
+                    data = b'ls'
+                    print('Data to run on shell is: ', data)
+                    response = subprocess.check_output([data])
+                    print('Sending Response: ', response)
+                    data = message.encrypt(message, Client_Key)
 
                 connection.sendall(data)
             else:
