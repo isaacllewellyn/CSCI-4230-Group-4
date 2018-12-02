@@ -29,3 +29,7 @@ def message(enc_type, data, key):
     elif enc_type == "ecc":
         enc = ecc.encrypt(data, key)
     return (enc, 1)
+def encrypt(message, key):
+    return 1
+def decrypt(message, key):
+    return 1
