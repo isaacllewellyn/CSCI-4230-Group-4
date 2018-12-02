@@ -6,8 +6,8 @@ import io
 
 
 class Hasha1(object):
-
 	dig = 20
+	block = 64
 
 	def __init__(self):
 
@@ -109,8 +109,8 @@ def process_chunk(chunk, h0, h1, h2, h3, h4):
 	return h0, h1, h2, h3, h4
 
 
-def left_rotate(n, v):
-    return ((n << v) | (n >> (32 - v))) & 0xffffffff
+def left_rotate(n, b):
+    return ((n << b) | (n >> (32 - b))) & 0xffffffff
 
 
 
@@ -125,14 +125,9 @@ def sha1(message):
 def main():
 
 	m = "This message will be hashed"
-	m2 = "The quick brown fox jumps over the lazy dog"
 	print(m)
 	h = sha1(m)
 	print(h)
-
-	print(m2)
-	h2 = sha1(m2)
-	print(h2)
 
 if __name__ == "__main__":
 	main()
