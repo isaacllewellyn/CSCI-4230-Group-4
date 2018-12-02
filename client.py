@@ -38,6 +38,7 @@ try:
 
     if(authenticated == 0):
         print('======= User Authentication =======')
+        ###TODO
 
     while authenticated == 1:
         message = input("SHELL: ")

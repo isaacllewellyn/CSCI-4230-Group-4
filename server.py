@@ -50,8 +50,7 @@ while True:
     try:
         print('======== INIT USER  ========')
         print('Connection from client: ', client_address)
-
-        # Receive the data in small chunks and retransmit it
+        # Receive the response and parse it
         while True:
             data = connection.recv(128)
             print('Received byte message {!r}'.format(data))
@@ -62,7 +61,10 @@ while True:
                     if(Client_Key == ''):
                         data = b'You failed to authenticate'
                     else:
-                        data = b'You are connected! Congratulations, enjoy your shell.'
+                        print('Key established.')
+                        data = b'Please choose a data encryption type.\n0: BBS\n1: SDS'
+                        dtype = input("Enter [0] for BBS or [1] for SDS")
+                        data = b'You are connected! Congratulations.'
                         connected = 1
                 else:
                     print('======== User Transmission ========')
