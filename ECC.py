@@ -7,9 +7,9 @@ random.seed()
 #WE DEFINE THE INFINITE POINT AS (-1, -1)
 inf = np.array([-1, -1])
 
-p = 8831
+p = 17
 a = 3
-b = 45
+b = 2
 
 #extended euclidian alg for use in modinv
 def egcd(a, b):
@@ -38,15 +38,11 @@ def addoverec(p1, p2, a, p):
 	if x1 == x2 and (y1 != y2 or y1 == 0):
 		return inf
 	if np.array_equal(p1, p2):
-		m = ((3*pow(x1, 2) + a) * modinv(2*y1, p))
+		m = ((3*x1*x1 + a) * modinv(2*y1, p))
 		m = m%p
-		if(m == 0):
-			return inf
 	else:
 		m = ((y2 - y1) * modinv(x2 - x1, p))
 		m = m%p
-		if(m == 0):
-			return inf
 	x3 = pow(m, 2) - x1 - x2
 	y3 = (m*(x1 - x3)) - y1
 	return np.array([x3%p, y3%p])
