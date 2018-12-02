@@ -43,5 +43,7 @@ def encrypt(enc_type, message, key):
     elif enc_type == 1:
         message = dfh.encrypt(message, key)
     return message, 1
-def decrypt(type, message, key):
-    return message
+def decrypt(dec_type, message, key):
+    if dec_type == 0:
+        plain = ecc.decrypt(message, key)
+    return plain
