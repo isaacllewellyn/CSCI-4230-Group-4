@@ -101,7 +101,7 @@ class ECC(object):
 	def encrypt(self, x, keypoint, bpoint):
 		#alice's encryption
 		print "msg:"
-		msg = self.points[random.randint(0, self.points.shape[0]-1)]
+		msg = self.points[x]
 		print msg
 
 		print "ciphertext:"
@@ -125,6 +125,7 @@ class ECC(object):
 
 ecc = ECC()
 ecc.init(3, 2, 17)
-res = ecc.encrypt(12, ecc.keypoint, ecc.bpoint)
+x = random.randint(0, ecc.points.shape[0]-1)
+res = ecc.encrypt(x, ecc.keypoint, ecc.bpoint)
 ecc.decrypt(res[0], res[1])
 
