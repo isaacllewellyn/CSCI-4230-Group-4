@@ -7,10 +7,6 @@ random.seed()
 #WE DEFINE THE INFINITE POINT AS (-1, -1)
 inf = np.array([-1, -1])
 
-p = 17
-a = 3
-b = 2
-
 #extended euclidian alg for use in modinv
 def egcd(a, b):
 	if a == 0:
@@ -59,9 +55,15 @@ def multoverec(p1, x, a, p):
 		x -= 1
 	return p2
 
-points = np.zeros((0, 2))
+#begin runtime code:
+
+p = 17
+a = 3
+b = 2
+
 
 print "computing a list of points"
+points = np.zeros((0, 2))
 
 #obtain a list of points
 for i in range(0, p):
@@ -78,38 +80,34 @@ print points.shape
 print "randomly picking a key point"
 keypoint = points[random.randint(0, points.shape[0]-1)]
 print keypoint
-secretint = random.randint(2, p)
+
 print "secret int:"
+secretint = random.randint(2, p)
 print secretint
 
-print "bpoint:"
+print "product:"
 bpoint = multoverec(keypoint, secretint, a, p)
 print bpoint
 
 #bpoint = keypoint*secretint
 #public: keypoint, curve formula, bpoint
+#secret: secretint
 
-#alice
+#alice's encryption
 print "msg:"
 msg = points[random.randint(0, points.shape[0]-1)]
 print msg
-#choose a point[msg value]
-rand = random.randint(2, p)
-while True:
-	y2 = multoverec(bpoint, rand, a, p)
-	if (np.array_equal(y2, msg) == False):
-		break;
-	rand = random.randint(2, p)
-y1 = multoverec(keypoint, rand, a, p)
+
 print "ciphertext:"
+#computes y1 = k*keypoint, y2 = x+k*bpoint
+rand = random.randint(2, p)
+y1 = multoverec(keypoint, rand, a, p)
+y2 = multoverec(bpoint, rand, a, p)
 y2 = addoverec(y2, msg, a, p)
 print y1
 print y2
-#chooses a random int
-#computes y1 = k*keypoint, y2 = x+k*bpoint
 
 #bob: computes x = y2-secretint*y1
-# = y2 + (secretint*y1 (with inverted y))
 y1 = multoverec(y1, secretint, a, p)
 if (np.array_equal(y1, inf) == False):
 	y1 = np.array([y1[0], (-y1[1])%p])
