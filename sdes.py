@@ -4,16 +4,14 @@ import binascii
 
 def encrypt(input, key):
 	key2 = ""
-	for i in range(1, 11):
-		key2 = key2 + str(key%pow(2, i))
-	print key2
-	run("encrypt", str(input), key2)
+	for i in range(0, 10):
+		key2 = key2 + str((key/pow(2, i)) % 2)
+	return run("encrypt", str(input), key2)
 def decrypt(input, key):
 	key2 = ""
-	for i in range(1, 11):
-		key2 = key2 + str(key%pow(2, i))
-	print key2
-	run("decrypt", str(input), key)
+	for i in range(0, 10):
+		key2 = key2 + str((key/pow(2, i)) % 2)
+	return run("decrypt", str(input), key2)
 def run(operation, input, key):
 	#this program takes the forms ./hw1.py <encrypt/decrypt> <input file> <output file> <key>
 	output = ""
