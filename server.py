@@ -16,7 +16,8 @@ sock.bind(server_address)
 # Listen for incoming connections
 sock.listen(1)
 
-ecc = ECC.ECC(3, 2, 17)
+print ("ECC INIT")
+ecc = ECC.ECC(31, 5672, 104729)
 
 
 def authenticate(data, connection):
@@ -28,12 +29,14 @@ def authenticate(data, connection):
         g = ecc.keypoint
         key = ecc.authinit(ecc.keypoint)
         # send to client, wait for response
-        connection.sendall(str(g[0]))
-        connection.sendall(str(g[1]))
-        connection.sendall(str(key[0]))
-        connection.sendall(str(key[1]))
-        x = connection.recv(64)
-        y = connection.recv(64)
+        print (g)
+        print (key)
+        connection.send(str(g[0]))
+        connection.send(str(g[1]))
+        connection.send(str(key[0]))
+        connection.send(str(key[1]))
+        x = connection.recv(128)
+        y = connection.recv(128)
         shared_key = ecc.authconfirm(np.array([float(x), float(y)]))
         return shared_key[0], 0
     if (data[:3] == b'DFH'):

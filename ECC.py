@@ -14,23 +14,37 @@ class ECC(object):
 		
 		
 		
-		print ("computing a list of points")
+		#print ("computing a list of points")
 		self.points = np.zeros((0, 2))
 		
 		#obtain a list of points
-		for i in range(0, p):
-			x = pow(i, 3, p)
-			x += a*i
-			x += b
-			x = x%p
-			for j in range(0, p):
-				if pow(j, 2, p) == x:
-					self.points = np.append(self.points, [[i, j]], axis=0)
+		#for i in range(0, p):
+		#	x = pow(i, 3, p)
+		#	x += a*i
+		#	x += b
+		#	x = x%p
+		#	for j in range(0, p):
+		#		if pow(j, 2, p) == x:
+		#			self.points = np.append(self.points, [[i, j]], axis=0)
 		
-		print (self.points)
-		print (self.points.shape)
+		while(True):
+			found = False
+			x = random.randint(0, p-1)
+			rside = pow(x, 3, p)
+			rside += a*x
+			rside += b
+			rside = rside%p
+			for i in range(0, p):
+				if pow(i, 2, p) == rside:
+					self.keypoint = np.array([x, i], dtype=np.int64)
+					found = True
+			if(found):
+				break
+		
+		#print (self.points)
+		#print (self.points.shape)
 		print ("randomly picking a key point")
-		self.keypoint = self.points[random.randint(0, self.points.shape[0]-1)]
+		#self.keypoint = self.points[random.randint(0, self.points.shape[0]-1)]
 		print( self.keypoint)
 		
 		print ("secret int:")
@@ -121,7 +135,7 @@ class ECC(object):
 		print (y1)
 	
 	def authinit(self, g):
-		self.x = random.randint(2, self.points.shape[0]-1)
+		self.x = random.randint(int(self.p/2), self.p)
 		return self.multoverec(g, self.x)
 
 	def authconfirm(self, g1):

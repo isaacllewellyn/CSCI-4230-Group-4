@@ -21,7 +21,7 @@ message, key = b'', ''
 authenticated = 0
 if (type == 0):
     message = b'ECC'
-    ecc = ECC.ECC(3, 2, 17)
+    ecc = ECC.ECC(31, 5672, 104729)
 elif type == 1:
     message = b'DFH'
 elif type == 2:
@@ -38,9 +38,9 @@ try:
     if (type == 0):
         g0 = sock.recv(64)
         g1 = sock.recv(64)
-        key = ecc.authinit(np.array([float(g0), float(g1)]))
         key0 = sock.recv(64)
         key1 = sock.recv(64)
+        key = ecc.authinit(np.array([float(g0), float(g1)]))
         sock.sendall(str(key[0]))
         sock.sendall(str(key[1]))
         shared_key = ecc.authconfirm(np.array([float(key0), float(key1)]))[0]
