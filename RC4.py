@@ -1,5 +1,7 @@
 #RC4 implementation
 
+
+
 #returns a keystream
 def RC4(key):
 	S = KSA(key)
@@ -40,14 +42,18 @@ def encrypt(message, key):
 	key = convertKey(key)
 	keyStream = RC4(key)
 
-	cipher = ''
+	cipher = []
 	for c in message:
-		cipher += ("%02X" % (ord(c) ^ keyStream.next()))
+		val = ("%02X" % (ord(c) ^ keyStream.next()))
+		cipher.append(val)
 
-	return cipher
+	return ''.join(cipher)
 
 def decrypt(cipher, key):
-	print(cipher)
+
+	cipher = cipher.decode('hex')
+	plain = encrypt(cipher, key)
+	return plain.decode('hex')
 
 
 def main():
@@ -58,6 +64,10 @@ def main():
 
 	print(p1)
 	print(c1)
+
+	p2 = decrypt(c1, k1)
+
+	print(p2)
 
 if __name__ == '__main__':
 	main()
