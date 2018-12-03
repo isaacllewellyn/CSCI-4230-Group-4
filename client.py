@@ -46,11 +46,14 @@ try:
         shared_key = ecc.authconfirm(np.array([float(key0), float(key1)]))[0]
         print("Shared key: ", shared_key)
     if (type == 1):
-        p = int(sock.recv(14).decode()) # possible thing here
+        print("Recving prime from server")
+        p = int(sock.recv(1024).decode()) # possible thing here
+        print("Prime: ", p)
         a = diffiehell.generateSecretKey()
         A = diffiehell.generatePublicKey(a, p)
-        B = int(sock.recv(64).decode()) # possible thing here
         sock.sendall(str(A).encode())
+
+        B = int(sock.recv(8).decode()) # possible thing here
 
         # Generate the shared secrets
         shared_key = pow(B, a, p)
