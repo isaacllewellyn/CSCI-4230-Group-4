@@ -90,7 +90,7 @@ try:
         message = mes.encrypt(enctype, message, shared_key)
         sock.sendall(message)
         data = sock.recv(1024)
-        data = mes.decrypt(enctype, message, shared_key)
+        data = mes.decrypt(enctype, data, shared_key)
         print('Response {!r}'.format(data))
 
 finally:

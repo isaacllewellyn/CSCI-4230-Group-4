@@ -107,7 +107,7 @@ while True:
                     print('Data to run on shell is: ', data)
                     #response = subprocess.check_output([data])
                     #print('Sending sub-shell Response: ', response)
-                    data = message.encrypt(dtype, message, Client_Key)
+                    data = message.encrypt(dtype, data, Client_Key)
                 connection.sendall(data)
             else:
                 print('no data from', client_address)
