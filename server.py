@@ -17,7 +17,7 @@ sock.bind(server_address)
 sock.listen(1)
 
 print ("ECC INIT")
-ecc = ECC.ECC(31, 5672, 104729)
+ecc = ECC.ECC(31, 5672, 104729, True)
 
 
 def authenticate(data, connection):
