@@ -105,8 +105,8 @@ while True:
                     print('======== User Transmission ========')
                     data = message.decrypt(dtype, data, Client_Key)
                     print('Data to run on shell is: ', data)
-                    response = subprocess.check_output([data])
-                    print('Sending sub-shell Response: ', response)
+                    #response = subprocess.check_output([data])
+                    #print('Sending sub-shell Response: ', response)
                     data = message.encrypt(dtype, message, Client_Key)
                 connection.sendall(data)
             else:

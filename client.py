@@ -13,11 +13,11 @@ server_address = ('localhost', 11000)
 print('connecting to {} port {}'.format(*server_address))
 sock.connect(server_address)
 print('Welcome to Group 4 Secure Socket Client!')
-authtype = input('Input your authentication method:\n0:'
+authtype = raw_input('Input your authentication method:\n0:'
              ' ECC\n1: DFH\n2: RSA\n enter the number of your choice: ')
 print("Authentication Type: {", authtype,"}")
 authtype = int(authtype)
-enctype = input('Input your encryption method:\n0:'
+enctype = raw_input('Input your encryption method:\n0:'
              ' bbs\n1: DES\n2: RC4\n enter the number of your choice: ')
 print("Authentication Type: {", enctype,"}")
 enctype = int(enctype)
@@ -80,13 +80,13 @@ try:
     print "continue auth:"
     data = sock.recv(1024)
     print('Client RECV {!r}'.format(data))
-    message = input("SHELL: ")
-    sock.sendall(str(message))
+    message = str(raw_input("SHELL: "))
+    sock.sendall(message)
     data = sock.recv(1024)
     print('Client RECV {!r}'.format(data))
     
     while authenticated == 1:
-        message = input("SHELL: ")
+        message = str(raw_input("SHELL: "))
         message = mes.encrypt(enctype, message, shared_key)
         sock.sendall(message)
         data = sock.recv(1024)
