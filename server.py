@@ -19,6 +19,7 @@ sock.listen(1)
 print ("ECC INIT")
 ecc = ECC.ECC(31, 5672, 104729, True)
 
+dtype = -1
 
 def authenticate(data, connection):
     key = '696969'
@@ -93,10 +94,11 @@ while True:
                         data = b'You failed to authenticate'
                     else:
                         print('Key established.', Client_Key)
-                        data = b'Please choose a data encryption type.\n0: BBS\n1: SDS'
+                        data = b'Please choose a data encryption type.\n0: BBS\n1: SDS \n2: RC4'
                         connection.sendall(data)
                         dtype = connection.recv(16)  # ooo a potential av?
                         print('Data type is : {', dtype, '}' )
+                        dtype = int(dtype)
                         data = b'You are connected! Congratulations.'
                         connected = 1
                 else:
@@ -110,7 +112,6 @@ while True:
             else:
                 print('no data from', client_address)
                 break
-            break
 
     finally:
         # Clean up the connection

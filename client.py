@@ -75,15 +75,21 @@ try:
 
     if (authenticated == 0):
         print('======= User Authentication =======')
-
-        ###TODO
-
+    
+    #further auth
+    print "continue auth:"
+    data = sock.recv(1024)
+    print('Client RECV {!r}'.format(data))
+    message = input("SHELL: ")
+    sock.sendall(str(message))
+    data = sock.recv(1024)
+    print('Client RECV {!r}'.format(data))
+    
     while authenticated == 1:
         message = input("SHELL: ")
         message = mes.encrypt(enctype, message, shared_key)
         sock.sendall(message)
         data = sock.recv(1024)
-        print('Client RECV {!r}'.format(data))
         data = mes.decrypt(enctype, message, shared_key)
         print('Response {!r}'.format(data))
 
