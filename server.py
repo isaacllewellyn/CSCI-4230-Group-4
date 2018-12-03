@@ -21,8 +21,9 @@ ecc = ECC.ECC(3, 2, 17)
 
 def authenticate(data, connection):
     key = '696969'
+    print("Data[:3]", data[:3])
     type = -1
-    if (data[:3] == 'ECC'):
+    if (data[:3] == b'ECC'):
         print("Attempting ECC authentication")
         g = ecc.keypoint
         key = ecc.authinit(ecc.keypoint)
@@ -35,13 +36,13 @@ def authenticate(data, connection):
         y = connection.recv(64)
         shared_key = ecc.authconfirm(np.array([float(x), float(y)]))
         return shared_key[0], 0
-    if (data[:3] == 'DFH'):
+    if (data[:3] == b'DFH'):
         print("Attempting DiffeHell authentication")
         p = diffiehell.getsmallprime()
         a = diffiehell.generateSecretKey()
         A = diffiehell.generatePublicKey(a, p)
-        connection.sendall(str(A))
-        B = int(sock.recv(64))  # possible thing here
+        connection.sendall(str(A).encode())
+        B = int(sock.recv(64).decode())  # possible thing here
         # Generate the shared secrets
         shared_key = pow(B, a, p)
         print("Shared key: ", shared_key)

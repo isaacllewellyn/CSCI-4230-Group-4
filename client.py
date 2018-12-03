@@ -49,11 +49,13 @@ try:
         p = diffiehell.getsmallprime()
         a = diffiehell.generateSecretKey()
         A = diffiehell.generatePublicKey(a, p)
-        sock.sendall(str(A))
-        B = int(sock.recv(64)) # possible thing here
+        B = int(sock.recv(64).decode()) # possible thing here
+        sock.sendall(str(A).encode())
+
         # Generate the shared secrets
         shared_key = pow(B, a, p)
         print("Shared key: ", shared_key)
+        authenticated = 1
         #Setup diffi
     # while amount_received < amount_expected:
     #     data = sock.recv(64)
