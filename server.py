@@ -53,6 +53,7 @@ def authenticate(data, connection):
     return key, type
 
 Client_Key = ''
+
 while True:
     # Wait for a connection
     print('======== INIT SERVER  ========')
@@ -75,16 +76,16 @@ while True:
                     else:
                         print('Key established.')
                         data = b'Please choose a data encryption type.\n0: BBS\n1: SDS'
-                        dtype = input("Enter [0] for BBS or [1] for SDS")
+                        dtype = input("Enter [0] for BBS, [1] for SDS, or [2] for RC4")
                         data = b'You are connected! Congratulations.'
                         connected = 1
                 else:
                     print('======== User Transmission ========')
-                    data = message.decrypt(type, data, Client_Key)
+                    data = message.decrypt(dtype, data, Client_Key)
                     print('Data to run on shell is: ', data)
                     response = subprocess.check_output([data])
                     print('Sending sub-shell Response: ', response)
-                    data = message.encrypt(type, message, Client_Key)
+                    data = message.encrypt(dtype, message, Client_Key)
                 connection.sendall(data)
             else:
                 print('no data from', client_address)

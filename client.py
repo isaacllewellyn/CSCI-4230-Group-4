@@ -43,7 +43,7 @@ try:
 		sock.sendall(str(key[0]))
 		sock.sendall(str(key[1]))
 		shared_key = ecc.authconfirm(np.array([float(key0), float(key1)]))[0]
-		print shared_key
+		print (shared_key)
     while amount_received < amount_expected:
         data = sock.recv(64)
         amount_received += len(data)
