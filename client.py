@@ -13,20 +13,24 @@ server_address = ('localhost', 11000)
 print('connecting to {} port {}'.format(*server_address))
 sock.connect(server_address)
 print('Welcome to Group 4 Secure Socket Client!')
-type = input('Input your authentication method:\n0:'
+authtype = input('Input your authentication method:\n0:'
              ' ECC\n1: DFH\n2: RSA\n enter the number of your choice: ')
-print("Type: {", type,"}")
-type = int(type)
+print("Authentication Type: {", authtype,"}")
+authtype = int(authtype)
+enctype = input('Input your encryption method:\n0:'
+             ' bbs\n1: DES\n2: RC4\n enter the number of your choice: ')
+print("Authentication Type: {", enctype,"}")
+enctype = int(enctype)
 message, key = b'', ''
 authenticated = 0
-if (type == 0):
+if (authtype == 0):
     message = b'ECC'
     ecc = ECC.ECC(31, 5672, 104729, False)
-elif type == 1:
+elif authtype == 1:
     message = b'DFH'
-elif type == 2:
+elif authtype == 2:
     message = b'RSA'
-    type = 4  # fix to allow all
+    authtype = 4  # fix to allow all
 try:
     # Send data
     print('sending {!r}'.format(message))
@@ -35,7 +39,7 @@ try:
     amount_received = 0
     amount_expected = len(message)
 
-    if (type == 0):
+    if (authtype == 0):
         g0 = sock.recv(64)
         g1 = sock.recv(64)
         key0 = sock.recv(64)
@@ -46,7 +50,7 @@ try:
         shared_key = ecc.authconfirm(np.array([float(key0), float(key1)]))[0]
         print("Shared key: ", shared_key)
         authenticated = 1
-    if (type == 1):
+    if (authtype == 1):
         print("Recving prime from server")
         p = sock.recv(64).decode() # possible thing here
         print("Recived: ", p)
@@ -76,11 +80,11 @@ try:
 
     while authenticated == 1:
         message = input("SHELL: ")
-        message = mes.encrypt(type, message, key)
+        message = mes.encrypt(enctype, message, key)
         sock.sendall(message)
         data = sock.recv(1024)
         print('Client RECV {!r}'.format(data))
-        data = mes.decrypt(type, message, key)
+        data = mes.decrypt(enctype, message, key)
         print('Response {!r}'.format(data))
 
 finally:
