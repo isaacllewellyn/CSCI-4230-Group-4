@@ -7,6 +7,7 @@ import blumblumshub as bbs
 import ECC as ecc
 import diffiehell as dfh
 import hmac
+import RC4
 
 def getNonce(length):
     return ''.join([str(random.randint(0, 9)) for i in range(length)])
@@ -43,6 +44,8 @@ def encrypt(enc_type, message, key):
         message = bbs.encrypt(message, key)
     elif enc_type == 4:
         message = rsa.encrypt(message, key)
+    elif enc_type == 5:
+        message = RC4.encrypt(message, key)
     return message, 1
 def decrypt(dec_type, message, key):
     if dec_type == 0:
@@ -55,4 +58,6 @@ def decrypt(dec_type, message, key):
         message = bbs.decrypt(message, key)
     elif dec_type == 4:
         message = rsa.decrypt(message, key)
+    elif dec_type == 5:
+        message = RC4.decrypt(message, key)
     return message, 1
