@@ -45,6 +45,7 @@ try:
         sock.sendall(str(key[1]))
         shared_key = ecc.authconfirm(np.array([float(key0), float(key1)]))[0]
         print("Shared key: ", shared_key)
+        authenticated = 1
     if (type == 1):
         print("Recving prime from server")
         p = sock.recv(64).decode() # possible thing here
