@@ -80,11 +80,11 @@ try:
 
     while authenticated == 1:
         message = input("SHELL: ")
-        message = mes.encrypt(enctype, message, key)
+        message = mes.encrypt(enctype, message, shared_key)
         sock.sendall(message)
         data = sock.recv(1024)
         print('Client RECV {!r}'.format(data))
-        data = mes.decrypt(enctype, message, key)
+        data = mes.decrypt(enctype, message, shared_key)
         print('Response {!r}'.format(data))
 
 finally:
