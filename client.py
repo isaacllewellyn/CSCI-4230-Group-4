@@ -13,7 +13,7 @@ server_address = ('localhost', 11000)
 print('connecting to {} port {}'.format(*server_address))
 sock.connect(server_address)
 print('Welcome to Group 4 Secure Socket Client!')
-type = input('Input your authentication method:\n 0:'
+type = input('Input your authentication method:\n0:'
              ' ECC\n1: DFH\n2: RSA\n enter the number of your choice: ')
 print("Type: {", type,"}")
 type = int(type)
@@ -47,7 +47,10 @@ try:
         print("Shared key: ", shared_key)
     if (type == 1):
         print("Recving prime from server")
-        p = int(sock.recv(1024).decode()) # possible thing here
+        p = sock.recv(64).decode() # possible thing here
+        print("Recived: ", p)
+        p = str(p[1:])
+        p = int(p.split("p")[0])
         print("Prime: ", p)
         a = diffiehell.generateSecretKey()
         A = diffiehell.generatePublicKey(a, p)

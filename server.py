@@ -40,13 +40,13 @@ def authenticate(data, connection):
         print("Attempting DiffeHell authentication")
         p = diffiehell.getsmallprime()
         print("Prime is :", str(p).encode())
-        connection.sendall(str(p).encode())
+        connection.sendall(b'p'+str(p).encode()+b'p')
         a = diffiehell.generateSecretKey()
         A = diffiehell.generatePublicKey(a, p)
-        connection.sendall(str(A).encode())
         B = int(connection.recv(64).decode())  # possible thing here
+        connection.sendall(str(A).encode())
         # Generate the shared secrets
-        shared_key = pow(B, a, p)
+        shared_key = pow(B, a, p), 1
         print("Shared key: ", shared_key)
 
         # key = message.authenticate(1)
