@@ -2,6 +2,8 @@
 import socket
 import sys
 import message as mes
+import ECC
+import numpy as np
 
 # Create a TCP/IP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -17,6 +19,7 @@ message, key = '', ''
 authenticated = 0
 if(type == 0):
     message = b'ECC'
+    ecc = ECC.ECC(3, 2, 17)
 elif type == 1:
     message = b'DFH'
 elif type == 2:
@@ -30,7 +33,17 @@ try:
     # Look for the response
     amount_received = 0
     amount_expected = len(message)
-
+    
+    if(type == 0):
+		g0 = sock.recv(64)
+		g1 = sock.recv(64)
+		key = ecc.authinit(np.array([float(g0), float(g1)]))
+		key0 = sock.recv(64)
+		key1 = sock.recv(64)
+		sock.sendall(str(key[0]))
+		sock.sendall(str(key[1]))
+		shared_key = ecc.authconfirm(np.array([float(key0), float(key1)]))[0]
+		print shared_key
     while amount_received < amount_expected:
         data = sock.recv(64)
         amount_received += len(data)
@@ -38,6 +51,7 @@ try:
 
     if(authenticated == 0):
         print('======= User Authentication =======')
+        ###TODO
 
     while authenticated == 1:
         message = input("SHELL: ")
