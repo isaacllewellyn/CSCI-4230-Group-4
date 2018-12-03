@@ -39,10 +39,12 @@ def authenticate(data, connection):
     if (data[:3] == b'DFH'):
         print("Attempting DiffeHell authentication")
         p = diffiehell.getsmallprime()
+        print("Prime is :", str(p).encode())
+        connection.sendall(str(p).encode())
         a = diffiehell.generateSecretKey()
         A = diffiehell.generatePublicKey(a, p)
         connection.sendall(str(A).encode())
-        B = int(sock.recv(64).decode())  # possible thing here
+        B = int(connection.recv(64).decode())  # possible thing here
         # Generate the shared secrets
         shared_key = pow(B, a, p)
         print("Shared key: ", shared_key)
