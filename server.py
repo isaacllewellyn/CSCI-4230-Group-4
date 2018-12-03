@@ -59,6 +59,7 @@ def authenticate(data, connection):
         #     print("Attempting BlumBlumblumBlumBlumShubbibiSubbi authentication")
         #     key = message.authenticate(3)
         type = 3
+        return shared_key
     if (data[:3] == 'RSA'):
         print("Attempting RenssslearSavyAdcryption authentication")
         key = message.authenticate(4)
@@ -92,7 +93,7 @@ while True:
                         data = b'Please choose a data encryption type.\n0: BBS\n1: SDS'
                         connection.sendall(data)
                         dtype = connection.recv(16)  # ooo a potential av?
-                        dtype = input("Enter [0] for BBS, [1] for SDS, or [2] for RC4")
+                        print('Data type is : {', dtype, '}' )
                         data = b'You are connected! Congratulations.'
                         connected = 1
                 else:
