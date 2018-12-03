@@ -2,7 +2,7 @@
 import socket
 import sys
 import message as mes
-import ECC
+import ECC, diffiehell
 import numpy as np
 
 # Create a TCP/IP socket
@@ -15,7 +15,9 @@ sock.connect(server_address)
 print('Welcome to Group 4 Secure Socket Client!')
 type = input('Input your authentication method:\n 0:'
              ' ECC\n1: DFH\n2: RSA\n enter the number of your choice: ')
-message, key = '', ''
+print("Type: {", type,"}")
+type = int(type)
+message, key = b'', ''
 authenticated = 0
 if (type == 0):
     message = b'ECC'
@@ -27,7 +29,6 @@ elif type == 2:
     type = 4  # fix to allow all
 try:
     # Send data
-    message = message + b': and this will be sent to the server.'
     print('sending {!r}'.format(message))
     sock.sendall(message)
     # Look for the response
@@ -43,14 +44,25 @@ try:
         sock.sendall(str(key[0]))
         sock.sendall(str(key[1]))
         shared_key = ecc.authconfirm(np.array([float(key0), float(key1)]))[0]
-        print(shared_key)
-    while amount_received < amount_expected:
-        data = sock.recv(64)
-        amount_received += len(data)
-        print('received {!r}'.format(data))
+        print("Shared key: ", shared_key)
+    if (type == 1):
+        p = diffiehell.getsmallprime()
+        a = diffiehell.generateSecretKey()
+        A = diffiehell.generatePublicKey(a, p)
+        sock.sendall(str(A))
+        B = int(sock.recv(64)) # possible thing here
+        # Generate the shared secrets
+        shared_key = pow(B, a, p)
+        print("Shared key: ", shared_key)
+        #Setup diffi
+    # while amount_received < amount_expected:
+    #     data = sock.recv(64)
+    #     amount_received += len(data)
+    #     print('received {!r}'.format(data))
 
     if (authenticated == 0):
         print('======= User Authentication =======')
+
         ###TODO
 
     while authenticated == 1:
