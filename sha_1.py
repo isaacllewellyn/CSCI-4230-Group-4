@@ -73,7 +73,8 @@ def process_chunk(chunk, h0, h1, h2, h3, h4):
 		w[i] = struct.unpack(b'>I', chunk[i * 4:i * 4 + 4])[0]
 
 	for i in range(16, 80):
-		w[i] = left_rotate(w[i - 3] ^ w[i - 8] ^ w[i - 14] ^ w[i - 16], 1)
+		w[i] = (w[i - 3] ^ w[i - 8] ^ w[i - 14] ^ w[i - 16])
+		w[i] = left_rotate(w[i], 1)
 
 	a = h0
 	b = h1
@@ -128,6 +129,11 @@ def main():
 	print(m)
 	h = sha1(m)
 	print(h)
+
+	m2 = "The quick brown fox jumps over the lazy dog"
+	print(m2)
+	h2 = sha1(m2)
+	print(h2)
 
 if __name__ == "__main__":
 	main()
