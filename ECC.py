@@ -5,7 +5,7 @@ import random
 random.seed()
 
 class ECC(object):
-	def __init__(self, a, b, p):
+	def __init__(self, a, b, p, generate):
 		#WE DEFINE THE INFINITE POINT AS (-1, -1)
 		self.inf = np.array([-1, -1])
 		self.a = a
@@ -27,7 +27,7 @@ class ECC(object):
 		#		if pow(j, 2, p) == x:
 		#			self.points = np.append(self.points, [[i, j]], axis=0)
 		
-		while(True):
+		while(generate):
 			found = False
 			x = random.randint(0, p-1)
 			rside = pow(x, 3, p)
@@ -40,13 +40,16 @@ class ECC(object):
 					found = True
 			if(found):
 				break
+		if(generate):
+			#print (self.points)
+			#print (self.points.shape)
+			print ("randomly picking a key point")
+			#self.keypoint = self.points[random.randint(0, self.points.shape[0]-1)]
+			print( self.keypoint)
 		
-		#print (self.points)
-		#print (self.points.shape)
-		print ("randomly picking a key point")
-		#self.keypoint = self.points[random.randint(0, self.points.shape[0]-1)]
-		print( self.keypoint)
+		pass
 		
+	def setupPKC():
 		print ("secret int:")
 		self.secretint = random.randint(2, p)
 		print (self.secretint)
@@ -59,7 +62,6 @@ class ECC(object):
 		#public: keypoint, curve formula, bpoint
 		#secret: secretint
 		
-		pass
 	
 	#extended euclidian alg for use in modinv
 	def egcd(self, a, b):

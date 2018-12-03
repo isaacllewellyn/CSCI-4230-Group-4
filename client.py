@@ -21,7 +21,7 @@ message, key = b'', ''
 authenticated = 0
 if (type == 0):
     message = b'ECC'
-    ecc = ECC.ECC(31, 5672, 104729)
+    ecc = ECC.ECC(31, 5672, 104729, False)
 elif type == 1:
     message = b'DFH'
 elif type == 2:
