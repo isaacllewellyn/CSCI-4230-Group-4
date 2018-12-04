@@ -24,9 +24,6 @@ if (authtype == 0):
     ecc = ECC.ECC(31, 5672, 104729, False)
 elif authtype == 1:
     message = b'DFH'
-elif authtype == 2:
-    message = b'RSA'
-    authtype = 4  # fix to allow all
 try:
     # Send data
     print('sending {!r}'.format(message))

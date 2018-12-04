@@ -35,19 +35,19 @@ def authenticate(enc_type):
     return key, 1
 
 def encrypt(enc_type, message, key):
-    if enc_type == 0:
+    if enc_type == 2:
         message = bbs.encrypt(message, key)
-    elif enc_type == 1:
+    elif enc_type == 0:
         message = des.encrypt(message, key)
-    elif enc_type == 2:
+    elif enc_type == 1:
         message = RC4.encrypt(message, key)
 	#message = message + hmac(key, message)
     return message
 def decrypt(dec_type, message, key):
-    if dec_type == 0:
+    if dec_type == 2:
         message = ecc.decrypt(message, key)
-    elif dec_type == 1:
+    elif dec_type == 0:
         message = des.decrypt(message, key)
-    elif dec_type == 2:
+    elif dec_type == 1:
         message = RC4.decrypt(message, key)
     return message

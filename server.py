@@ -94,7 +94,7 @@ while True:
                         data = b'You failed to authenticate'
                     else:
                         print('Key established.', Client_Key)
-                        data = b'Please choose a data encryption type.\n0: BBS\n1: SDS \n2: RC4'
+                        data = b'Please choose a data encryption type.\n0: SDES \n1: RC4'
                         connection.sendall(data)
                         dtype = connection.recv(16)  # ooo a potential av?
                         print('Data type is : {', dtype, '}' )
