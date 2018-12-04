@@ -77,7 +77,7 @@ try:
         print('======= User Authentication =======')
     
     #further auth
-    print "continue auth:"
+    print("continue auth:")
     data = sock.recv(1024)
     print('Client RECV {!r}'.format(data))
     message = str(raw_input("SHELL: "))
