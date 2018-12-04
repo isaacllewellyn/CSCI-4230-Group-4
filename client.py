@@ -17,10 +17,6 @@ authtype = raw_input('Input your authentication method:\n0:'
              ' ECC\n1: DFH\n2: RSA\n enter the number of your choice: ')
 print("Authentication Type: {", authtype,"}")
 authtype = int(authtype)
-enctype = raw_input('Input your encryption method:\n0:'
-             ' bbs\n1: DES\n2: RC4\n enter the number of your choice: ')
-print("Authentication Type: {", enctype,"}")
-enctype = int(enctype)
 message, key = b'', ''
 authenticated = 0
 if (authtype == 0):
@@ -76,12 +72,15 @@ try:
     if (authenticated == 0):
         print('======= User Authentication =======')
     
-    #further auth
+    #pick encryption type
     print("continue auth:")
     data = sock.recv(1024)
     print('Client RECV {!r}'.format(data))
-    message = str(raw_input("SHELL: "))
-    sock.sendall(message)
+    enctype = raw_input('Input your encryption method:\n0:'
+             ' bbs\n1: DES\n2: RC4\n enter the number of your choice: ')
+    print("Authentication Type: {", enctype,"}")
+    sock.sendall(enctype)
+    enctype = int(enctype)
     data = sock.recv(1024)
     print('Client RECV {!r}'.format(data))
     
