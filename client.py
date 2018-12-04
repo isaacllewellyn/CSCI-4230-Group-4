@@ -14,7 +14,7 @@ print('connecting to {} port {}'.format(*server_address))
 sock.connect(server_address)
 print('Welcome to Group 4 Secure Socket Client!')
 authtype = raw_input('Input your authentication method:\n0:'
-             ' ECC\n1: DFH\n2: RSA\n enter the number of your choice: ')
+             ' ECC\n1: DFH\n enter the number of your choice: ')
 print("Authentication Type: {", authtype,"}")
 authtype = int(authtype)
 message, key = b'', ''
@@ -73,8 +73,8 @@ try:
     print("continue auth:")
     data = sock.recv(1024)
     print('Client RECV {!r}'.format(data))
-    enctype = raw_input('Input your encryption method:\n0:'
-             ' bbs\n1: DES\n2: RC4\n enter the number of your choice: ')
+    enctype = raw_input('Input your encryption method:'
+             '\n0: DES\n1: RC4\n enter the number of your choice: ')
     print("Authentication Type: {", enctype,"}")
     sock.sendall(enctype)
     enctype = int(enctype)
