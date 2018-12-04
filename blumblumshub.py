@@ -46,16 +46,16 @@ def blumgold_decrypt( p, q, a, b, xrand, cipher):
     return BBS_chunk(cipher, h, n ,x0)
 
 #Blum Protocol
-p, q, a, b, x = 499, 547, -57, 52, 159201 #Starting Variables
+#p, q, a, b, x = 499, 547, -57, 52, 159201 #Starting Variables
 # p, q, a, b, are used to create X/X0
-message = int('10011100000100001100', 2) #Convert the binary message to an int
+#message = int('10011100000100001100', 2) #Convert the binary message to an int
 #Our message is given
-cipher, x = blumgold_encrypt(p,q ,x, message)#Generate cipher and x to combine and send to other party securely
+#cipher, x = blumgold_encrypt(p,q ,x, message)#Generate cipher and x to combine and send to other party securely
 
 ### 1. What is the ciphertext?
-print("Cipher Text", bin(cipher)[2::], " == " , cipher)
+#print("Cipher Text", bin(cipher)[2::], " == " , cipher)
 
 ### 2. Verify your answer by showing that D(C(m))=m
-message1, x = blumgold_decrypt( p, q, a, b, x, cipher)
-print("Decrypted Text", bin(message1)[2::], " == " , message1)
-print("Equality Check: ", message == message1)
+#message1, x = blumgold_decrypt( p, q, a, b, x, cipher)
+#print("Decrypted Text", bin(message1)[2::], " == " , message1)
+#print("Equality Check: ", message == message1)

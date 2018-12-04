@@ -41,13 +41,17 @@ def encrypt(enc_type, message, key):
         message = des.encrypt(message, key)
     elif enc_type == 1:
         message = RC4.encrypt(message, key)
-	#message = message + hmac(key, message)
+    message = message + str(hmac.hmac(key, message))
     return message
 def decrypt(dec_type, message, key):
+    mac = message[-40:]
+    message = message[:-40]
     if dec_type == 2:
         message = ecc.decrypt(message, key)
     elif dec_type == 0:
         message = des.decrypt(message, key)
     elif dec_type == 1:
         message = RC4.decrypt(message, key)
+    if(hmac.hmac(key, message) == mac):
+		return -1
     return message

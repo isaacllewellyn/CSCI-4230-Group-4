@@ -43,7 +43,7 @@ class RSA(object):
         g, x, y = self.egcd(a%p, p)
         return x % p
 
-rsa = RSA(61, 53)
-c = rsa.encrypt(533)
-e = rsa.decrypt(c)
-print(e)
+#rsa = RSA(61, 53)
+#c = rsa.encrypt(533)
+#e = rsa.decrypt(c)
+#print(e)
