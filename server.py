@@ -106,11 +106,13 @@ while True:
                     data = message.decrypt(dtype, data, Client_Key)
                     if(data == -1):
                         print('Invalid MAC, message should not be trusted')
+                        data = "-1"
                     else:
+                        data = message.encrypt(dtype, data, Client_Key)
                         print('Data to run on shell is: ', data)
                     #response = subprocess.check_output([data])
                     #print('Sending sub-shell Response: ', response)
-                    data = message.encrypt(dtype, data, Client_Key)
+                    
                 connection.sendall(data)
             else:
                 print('no data from', client_address)
