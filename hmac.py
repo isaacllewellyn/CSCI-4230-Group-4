@@ -30,7 +30,7 @@ def hmac(key, m):
 	out = 20
 	#if key longer than the block, shorten using sha-1
 	if len(key2) > block:
-		key2 = Hasha1().update(m).hexDigest()
+		key2 = sha_1.sha1(m)
 
 	#if key shorter than block, lengthen using pad of 0s
 	if len(key2) < block:
