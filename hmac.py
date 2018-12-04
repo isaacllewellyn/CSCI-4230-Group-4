@@ -25,10 +25,9 @@ def addPad(key, size):
 def hmac(key, m):
 	key2 = ""
 	for i in range(0, 10):
-		key2 = key2 + str((key/pow(2, i)) % 2)
+		key2 = key2 + str((int(key)/pow(2, i)) % 2)
 	block = 64
 	out = 20
-
 	#if key longer than the block, shorten using sha-1
 	if len(key2) > block:
 		key2 = Hasha1().update(m).hexDigest()
