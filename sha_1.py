@@ -19,39 +19,36 @@ class Hasha1(object):
             0xC3D2E1F0,
         )
 
-		self._unprocessed = b''
+		self.remaining = b''
 
-		self._message_byte_length = 0
+		self.bytes = 0
 
-	def update(self, arg):
+	def hash(self, arg):
 
-		chunk = self._unprocessed + arg[:64]
+		chunk = self.remaining + arg[:64]
 
 		while len(chunk) == 64:
 			self._h = process_chunk(chunk, *self._h)
-			self._message_byte_length += 64
+			self.bytes += 64
 			chunk = arg[:64]
 			arg = arg[64:]
 
-		self._unprocessed = chunk
+		self.remaining = chunk
 		return self
 
-	def digest(self):
-		return b''.join(struct.pack(b'>I',h) for h in self.produce_digest())
+	def getHex(self):
+		return'%08x%08x%08x%08x%08x' % self.hashBlock()
 
-	def hexdigest(self):
-		return'%08x%08x%08x%08x%08x' % self.produce_digest()
+	def hashBlock(self):
 
-	def produce_digest(self):
-
-		message = self._unprocessed
-		message_byte_length = self._message_byte_length + len(message)
+		message = self.remaining
+		fullBytes = self.bytes + len(message)
 
 		message += b'\x80'
 
-		message += b'\x80' * ((56 - (message_byte_length + 1) % 64) % 64)
+		message += b'\x80' * ((56 - (fullBytes + 1) % 64) % 64)
 
-		message_bit_length = message_byte_length * 8
+		message_bit_length = fullBytes * 8
 		message += struct.pack(b'>Q', message_bit_length)
 
 		h = process_chunk(message[:64], *self._h)
@@ -118,7 +115,7 @@ def left_rotate(n, b):
 
 def sha1(message):
 
-	return Hasha1().update(message).hexdigest()
+	return Hasha1().hash(message).getHex()
 
 
 

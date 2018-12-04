@@ -28,7 +28,7 @@ def hmac(key, m):
 
 	#if key longer than the block, shorten using sha-1
 	if len(key) > block:
-		key = Hasha1().update(m).hexDigest()
+		key = sha_1.sha1(m)
 
 	#if key shorter than block, lengthen using pad of 0s
 	if len(key) < block:
@@ -51,8 +51,8 @@ def hmac(key, m):
 
 def main():
 
-	m = "The quick brown fox jumps over the lazy dog"
-	k = b'key'
+	m = "g"
+	k = b'heys'
 
 
 
