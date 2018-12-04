@@ -87,7 +87,10 @@ try:
         sock.sendall(message)
         data = sock.recv(1024)
         data = mes.decrypt(enctype, data, shared_key)
-        print('Response {!r}'.format(data))
+        if(data == -1):
+            print('Invalid MAC, message should not be trusted')
+        else:
+            print('Response {!r}'.format(data))
 
 finally:
     print('closing socket')

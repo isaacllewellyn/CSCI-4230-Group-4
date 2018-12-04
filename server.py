@@ -104,6 +104,10 @@ while True:
                 else:
                     print('======== User Transmission ========')
                     data = message.decrypt(dtype, data, Client_Key)
+                    if(data == -1):
+                        print('Invalid MAC, message should not be trusted')
+                    else:
+                        print('Response {!r}'.format(data))
                     print('Data to run on shell is: ', data)
                     #response = subprocess.check_output([data])
                     #print('Sending sub-shell Response: ', response)

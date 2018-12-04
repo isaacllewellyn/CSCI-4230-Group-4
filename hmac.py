@@ -23,22 +23,25 @@ def addPad(key, size):
 #		- blockSize = 64
 #		- output size = 20
 def hmac(key, m):
+	key2 = ""
+	for i in range(0, 10):
+		key2 = key2 + str((key/pow(2, i)) % 2)
 	block = 64
 	out = 20
 
 	#if key longer than the block, shorten using sha-1
-	if len(key) > block:
-		key = Hasha1().update(m).hexDigest()
+	if len(key2) > block:
+		key2 = Hasha1().update(m).hexDigest()
 
 	#if key shorter than block, lengthen using pad of 0s
-	if len(key) < block:
-		key = addPad(key,block)
+	if len(key2) < block:
+		key2 = addPad(key2,block)
 
 	tbl1 = string.maketrans(trans_5C, trans_5C)
 	tbl2 = string.maketrans(trans_36, trans_36)
 
-	o_key_pad = key.translate(tbl1)
-	i_key_pad = key.translate(tbl2)
+	o_key_pad = key2.translate(tbl1)
+	i_key_pad = key2.translate(tbl2)
 
 
 	preIn = i_key_pad + m
@@ -61,6 +64,7 @@ def main():
 	print(m)
 	print("HMAC :")
 	print(h)
+	print(len(h))
 
 if __name__ == "__main__":
 	main()
