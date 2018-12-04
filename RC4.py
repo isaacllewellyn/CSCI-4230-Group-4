@@ -1,6 +1,6 @@
 #RC4 implementation
 
-
+import struct
 
 #returns a keystream
 def RC4(key):
@@ -16,7 +16,7 @@ def KSA(key):
 
 	j = 0
 	for i in range(256):
-		j = (j + s[i] + key[i % keyLen]) % 256
+		j = (j + s[i] + ord(key[i % keyLen])) % 256
 		s[i], s[j] = s[j], s[i]
 
 	return s
@@ -36,7 +36,7 @@ def PRGA(s):
 
 
 def convertKey(k):
-	return [ord(c) for c in k]
+	return struct.pack(">I", k)
 
 def encrypt(message, key):
 	key = convertKey(key)
@@ -57,7 +57,7 @@ def decrypt(cipher, key):
 
 
 def main():
-	k1 = "Key"
+	k1 = 593
 	p1 = "Plaintext"
 
 	c1 = encrypt(p1, k1)
